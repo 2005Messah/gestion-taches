@@ -1,19 +1,18 @@
 @extends('layouts.app')
 
-@section('title', 'Modifier une tâche')
+@section('title', 'Nouvelle tâche')
 
 @section('content')
 
 <div class="container-fluid">
 
-    {{-- En-tête --}}
     <div class="mb-4">
         <h2 class="fw-bold text-purple">
-            Modifier la tâche
+            Nouvelle tâche
         </h2>
 
         <p class="text-muted">
-            Mets à jour les informations de cette tâche.
+            Ajouter une nouvelle tâche au système.
         </p>
     </div>
 
@@ -25,7 +24,6 @@
 
                 <div class="card-body p-5">
 
-                    {{-- Erreurs --}}
                     @if($errors->any())
                         <div class="alert alert-danger">
                             <ul class="mb-0">
@@ -36,16 +34,13 @@
                         </div>
                     @endif
 
-                    {{-- Formulaire --}}
-                    <form action="{{ route('tasks.update', $task->id) }}"
+                    <form action="{{ route('tasks.store') }}"
                           method="POST">
 
                         @csrf
-                        @method('PUT')
 
                         {{-- Titre --}}
                         <div class="mb-4">
-
                             <label class="form-label fw-bold">
                                 Titre
                             </label>
@@ -53,27 +48,22 @@
                             <input type="text"
                                    name="title"
                                    class="form-control custom-input"
-                                   value="{{ old('title', $task->title) }}"
                                    required>
-
                         </div>
 
                         {{-- Description --}}
                         <div class="mb-4">
-
                             <label class="form-label fw-bold">
                                 Description
                             </label>
 
                             <textarea name="description"
                                       rows="4"
-                                      class="form-control custom-input">{{ old('description', $task->description) }}</textarea>
-
+                                      class="form-control custom-input"></textarea>
                         </div>
 
-                        {{-- Statut --}}
+                        {{-- Status --}}
                         <div class="mb-4">
-
                             <label class="form-label fw-bold">
                                 Statut
                             </label>
@@ -82,28 +72,15 @@
                                     class="form-select custom-input"
                                     required>
 
-                                <option value="À faire"
-                                    {{ $task->status == 'À faire' ? 'selected' : '' }}>
-                                    À faire
-                                </option>
-
-                                <option value="En cours"
-                                    {{ $task->status == 'En cours' ? 'selected' : '' }}>
-                                    En cours
-                                </option>
-
-                                <option value="Terminé"
-                                    {{ $task->status == 'Terminé' ? 'selected' : '' }}>
-                                    Terminé
-                                </option>
+                                <option value="À faire">À faire</option>
+                                <option value="En cours">En cours</option>
+                                <option value="Terminé">Terminé</option>
 
                             </select>
-
                         </div>
 
                         {{-- Projet --}}
                         <div class="mb-4">
-
                             <label class="form-label fw-bold">
                                 Projet
                             </label>
@@ -113,23 +90,16 @@
                                     required>
 
                                 @foreach($projects as $project)
-
-                                    <option value="{{ $project->id }}"
-                                        {{ $task->project_id == $project->id ? 'selected' : '' }}>
-
+                                    <option value="{{ $project->id }}">
                                         {{ $project->name }}
-
                                     </option>
-
                                 @endforeach
 
                             </select>
-
                         </div>
 
                         {{-- Utilisateur --}}
                         <div class="mb-4">
-
                             <label class="form-label fw-bold">
                                 Assigné à
                             </label>
@@ -142,22 +112,16 @@
                                 </option>
 
                                 @foreach($users as $user)
-
-                                    <option value="{{ $user->id }}"
-                                        {{ $task->assigned_to == $user->id ? 'selected' : '' }}>
-
+                                    <option value="{{ $user->id }}">
                                         {{ $user->name }}
-
                                     </option>
-
                                 @endforeach
 
                             </select>
-
                         </div>
 
                         {{-- Boutons --}}
-                        <div class="d-flex justify-content-between flex-wrap gap-2">
+                        <div class="d-flex justify-content-between">
 
                             <a href="{{ route('tasks.index') }}"
                                class="btn btn-outline-secondary px-4">
@@ -166,7 +130,7 @@
 
                             <button type="submit"
                                     class="btn btn-purple px-5">
-                                Mettre à jour
+                                Enregistrer
                             </button>
 
                         </div>
@@ -183,41 +147,31 @@
 
 </div>
 
-{{-- Styles --}}
 <style>
 
-    .text-purple{
-        color:#6f42c1;
-    }
+.text-purple{
+    color:#6f42c1;
+}
 
-    .btn-purple{
-        background:#6f42c1;
-        color:white;
-        border:none;
-        transition:0.3s;
-    }
+.btn-purple{
+    background:#6f42c1;
+    color:white;
+    border:none;
+}
 
-    .btn-purple:hover{
-        background:#5b34a1;
-        color:white;
-    }
+.btn-purple:hover{
+    background:#5b34a1;
+    color:white;
+}
 
-    .custom-input{
-        border-radius:12px;
-        padding:12px;
-        border:1px solid #ddd;
-        transition:0.3s;
-    }
+.custom-input{
+    border-radius:12px;
+    padding:12px;
+}
 
-    .custom-input:focus{
-        border-color:#6f42c1;
-        box-shadow:0 0 0 0.15rem rgba(111,66,193,0.25);
-    }
-
-    .card{
-        border-radius:20px;
-        overflow:hidden;
-    }
+.card{
+    border-radius:20px;
+}
 
 </style>
 

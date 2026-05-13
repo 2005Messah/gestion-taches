@@ -15,8 +15,9 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $projects = Project::all();
-        $tasks = Task::with(['comments.user', 'assignedUser'])->get();
+        $projects = Project::with('tasks')->get();
+
+        $tasks = Task::with(['project', 'user'])->get();
 
         return view('dashboard', compact('projects', 'tasks'));
     }

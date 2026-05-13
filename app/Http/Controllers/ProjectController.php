@@ -36,5 +36,22 @@ class ProjectController extends Controller
 
         return redirect()->route('projects.index')
             ->with('success', 'Projet créé avec succès !');
+
     }
+
+
+    public function show(Project $project)
+{
+    return view('projects.show', compact('project'));
 }
+
+    public function destroy(Project $project)
+{
+    $project->delete();
+
+    return redirect()
+        ->route('projects.index')
+        ->with('success', 'Projet supprimé avec succès');
+}
+}
+
